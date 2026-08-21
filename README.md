@@ -23,9 +23,10 @@ under `mem0-port/`.
 
 ## mem0 → this port
 
-📉 173 Python lines (scope-matched) → **117 Java lines**<br>
+📉 173 Python lines (scope-matched) → **124 Java lines**<br>
 📁 2 files → **10 files**<br>
-🧾 7/7 dedup hashes → **7/7 agree byte-for-byte**
+🧾 7/7 dedup hashes → **7/7 agree byte-for-byte**<br>
+⚡ 1.198 ms → **0.923 ms** to hash-and-dedup 2,000 candidates against 500 existing facts
 
 Full method and the numbers that did *not* make this list:
 [`bench/REPORT.md`](https://github.com/TylerJewell/akka-specify-harness/blob/main/mem0-port/bench/REPORT.md).

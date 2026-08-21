@@ -23,17 +23,26 @@ public record MemoryStoreState(List<Memory> memories) {
     return new MemoryStoreState(List.of());
   }
 
+  private static final char[] HEX = "0123456789abcdef".toCharArray();
+
   /** Rule 1 — exact-content MD5, no trim or case fold, matching mem0-src/mem0/memory/main.py:1020. */
   public static String hashOf(String text) {
     try {
-      var digest = MessageDigest.getInstance("MD5");
-      var bytes = digest.digest(text.getBytes(StandardCharsets.UTF_8));
-      var sb = new StringBuilder(bytes.length * 2);
-      for (byte b : bytes) sb.append(String.format("%02x", b));
-      return sb.toString();
+      var bytes = MessageDigest.getInstance("MD5").digest(text.getBytes(StandardCharsets.UTF_8));
+      return toHex(bytes);
     } catch (NoSuchAlgorithmException e) {
       throw new IllegalStateException(e);
     }
+  }
+
+  private static String toHex(byte[] bytes) {
+    var chars = new char[bytes.length * 2];
+    for (int i = 0; i < bytes.length; i++) {
+      int v = bytes[i] & 0xFF;
+      chars[i * 2] = HEX[v >>> 4];
+      chars[i * 2 + 1] = HEX[v & 0x0F];
+    }
+    return new String(chars);
   }
 
   /**
